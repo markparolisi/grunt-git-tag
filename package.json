@@ -1,7 +1,7 @@
 {
     "name": "grunt-git-tag",
     "description": "Generate Git tags.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "homepage": "https://github.com/markparolisi/grunt-git-tag",
     "author": {
         "name": "Mark Parolisi",
@@ -25,7 +25,7 @@
         "node": ">= 0.8.0"
     },
     "scripts": {
-        "test": "grunt test"
+        "test": "grunt nodeunit"
     },
     "devDependencies": {
         "grunt-contrib-jshint": "~0.2.0",

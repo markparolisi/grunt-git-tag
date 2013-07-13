@@ -1,6 +1,5 @@
-/*global require, module */
+/*global require, module, exports, test */
+'use strict';
+
 var grunt = require('grunt');
-module.exports = {
 
-
-};
