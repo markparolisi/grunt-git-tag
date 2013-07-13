@@ -1,0 +1,45 @@
+{
+    "name": "grunt-git-tag",
+    "description": "Generate Git tags.",
+    "version": "0.0.1",
+    "homepage": "https://github.com/markparolisi/grunt-git-tag",
+    "author": {
+        "name": "Mark Parolisi",
+        "url": "http://markparolisi.com/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:markparolisi/grunt-git-tag.git"
+    },
+    "bugs": {
+        "url": "https://github.com/markparolisi/grunt-git-tag/issues"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://opensource.org/licenses/MIT"
+        }
+    ],
+    "main": "Gruntfile.js",
+    "engines": {
+        "node": ">= 0.8.0"
+    },
+    "scripts": {
+        "test": "grunt test"
+    },
+    "devDependencies": {
+        "grunt-contrib-jshint": "~0.2.0",
+        "grunt-contrib-nodeunit": "~0.1.2",
+        "grunt": "~0.4.0"
+    },
+    "peerDependencies": {
+        "grunt": "~0.4.0"
+    },
+    "dependencies": {
+        "prompt": "~0.2"
+    },
+    "keywords": [
+        "gruntplugin"
+    ],
+    "readmeFilename": "README.md"
+}
