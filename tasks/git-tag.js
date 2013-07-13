@@ -13,27 +13,53 @@ module.exports = function (grunt) {
     grunt.registerTask('git-tag', 'Git tag a version', function () {
         var prompt = require('prompt'), exec = require('child_process').exec, done = this.async(), config, defaults, options, packageJSON, newVersion, gitRemote, tagExists, promptSchema, tagArguments;
 
-        config = grunt.config('gitTag');
-
+        /**
+         * Default configration options
+         * @type {{packageFile: string}}
+         */
         defaults = {
             packageFile: 'package.json'
         };
 
+        /**
+         * Get custom configuration options from the gruntfile
+         * @type {*}
+         */
+        config = grunt.config('gitTag');
+
+        /**
+         * Merge the defaults and the options
+         * @type {Object}
+         */
         options = grunt.util._.extend(defaults, config);
 
-        packageJSON = grunt.file.readJSON(options.packageFile);
+        /**
+         * Attempt to read and parse the package file JSOn
+         */
+        try {
+            packageJSON = grunt.file.readJSON(options.packageFile);
+        } catch (e) {
+            grunt.log.debug(e);
+            grunt.fatal('Error with packageJSON file ' + options.packageFile);
+        }
 
+        /**
+         * Find application version in package JSON
+         */
         if (packageJSON.version) {
             newVersion = packageJSON.version;
         } else {
             grunt.fatal('No version defined in ' + options.packageFile);
         }
 
+        /**
+         * Search the package JSON for the Git repo
+         */
         gitRemote = false;
         if (packageJSON.repository) {
-            if (packageJSON.repository.type === 'git' && packageJSON.repository.url.split('.').pop() === 'git') {
+            if (packageJSON.repository.type === 'git' && packageJSON.repository.url && packageJSON.repository.url.split('.').pop() === 'git') {
                 gitRemote = packageJSON.repository.url;
-            } else if (packageJSON.repository.split('.').pop() === 'git') {
+            } else if (packageJSON.repository.substring && packageJSON.repository.split('.').pop() === 'git') {
                 gitRemote = packageJSON.repository;
             }
         }
@@ -42,6 +68,10 @@ module.exports = function (grunt) {
             grunt.fatal('No Git remote repository found in ' + options.packageFile);
         }
 
+        /**
+         * Create a Git tag and push to remote
+         * @param args String flag arguments for the git tag command
+         */
         function createTag(args) {
             exec('git tag ' + newVersion + ' ' + args, function (err, stdout, stderr) {
                 if (err) {
@@ -58,6 +88,10 @@ module.exports = function (grunt) {
             });
         }
 
+        /**
+         * Prompt the user to optionally adding a message to the tag
+         * Then create the tag
+         */
         function maybeAddMessage() {
             prompt.start();
             promptSchema = {
@@ -79,8 +113,10 @@ module.exports = function (grunt) {
             });
         }
 
+        /**
+         * Check if the tag exists then possibly proceed with the task
+         */
         tagExists = 'git ls-remote --tags |  grep "tags/' + newVersion + '" | grep -v grep | awk " {print $2}"';
-
         exec(tagExists, function (err, stdout, stderr) {
             if (err) {
                 grunt.fatal(stdout);
