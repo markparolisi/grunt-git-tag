@@ -1,7 +1,7 @@
 {
     "name": "grunt-git-tag",
     "description": "Generate Git tags.",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "homepage": "https://github.com/markparolisi/grunt-git-tag",
     "author": {
         "name": "Mark Parolisi",
