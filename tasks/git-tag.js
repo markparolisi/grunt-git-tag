@@ -6,11 +6,12 @@
  * http://www.opensource.org/licenses/MIT
  */
 /*global module,require*/
+/*jslint node: true */
 
 module.exports = function (grunt) {
     'use strict';
 
-    grunt.registerTask('git-tag', 'Git tag a version', function () {
+    grunt.registerTask('git_tag', 'Git tag a version', function () {
         var events = require('events'),
             eventEmitter = new events.EventEmitter(),
             prompt = require('prompt'),
@@ -66,13 +67,14 @@ module.exports = function (grunt) {
                 promptSchema = {
                     properties: {
                         tagVersion: {
-                            description: 'No version defined. Enter a tag or leave empty to exit.',
+                            description: 'No version defined. Enter a tag or leave empty to exit.'.cyan,
                             type: 'string',
                             required: false
                         }
                     }
                 };
                 prompt.get(promptSchema, function (err, result) {
+                    // If custom tag entered, set it and write it to the package file
                     if (result.tagVersion && result.tagVersion.length > 0) {
                         newVersion = result.tagVersion;
                         grunt.file.write(settings.packageFile, JSON.stringify(grunt.util._.extend(packageJSON, {version: result.tagVersion}), null, 4));
@@ -100,7 +102,7 @@ module.exports = function (grunt) {
                     promptSchema = {
                         properties: {
                             doContinue: {
-                                description: 'Do you wish to continue? (y/n)',
+                                description: 'Do you wish to continue? (y/n)'.cyan,
                                 type: 'string',
                                 required: true
                             }
@@ -119,15 +121,14 @@ module.exports = function (grunt) {
         };
 
         /**
-         * Prompt the user to optionally adding a message to the tag
-         * Then create the tag
+         * Prompt the user to optionally add a message to the tag
          */
         maybeAddMessage = function maybeAddMessage() {
             prompt.start();
             var promptSchema = {
                 properties: {
                     tagMessage: {
-                        description: 'Optionally add a message',
+                        description: 'Optionally add a message'.cyan,
                         type: 'string',
                         required: false
                     }
@@ -137,6 +138,8 @@ module.exports = function (grunt) {
                 if (result.tagMessage) {
                     tagArguments = '-fam "' + result.tagMessage + '"';
                 } else {
+                    // always force a tag creation because we already checked
+                    // if it exists and the user was prompted for a decision
                     tagArguments = '-f';
                 }
                 eventEmitter.emit('MessageReady');
@@ -171,4 +174,9 @@ module.exports = function (grunt) {
         initialize();
 
     });
+
+    /**
+     * Create an alias task with a dash instead of underscore for easier CLI
+     */
+    grunt.registerTask('git-tag', ['git_tag']);
 };

@@ -11,15 +11,15 @@ module.exports = function (grunt) {
     'use strict';
 
     grunt.initConfig({
+        nodeunit: {
+            tests: ['test/*_test.js']
+        },
         jshint: {
             all: [
                 'Gruntfile.js',
                 'tasks/*.js',
                 '<%= nodeunit.tests %>'
             ]
-        },
-        nodeunit: {
-            tests: ['test/*_test.js']
         }
 
     });
