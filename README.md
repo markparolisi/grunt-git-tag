@@ -1,7 +1,4 @@
-# grunt-contrib-concat [![Build Status](https://secure.travis-ci.org/gruntjs/grunt-contrib-concat.png?branch=master)](http://travis-ci.org/gruntjs/grunt-contrib-concat)
-
-> Concatenate files.
-
+# grunt-git-tag
 
 
 ## Getting Started
@@ -20,22 +17,8 @@ grunt.loadNpmTasks('grunt-git-tag');
 ```
 
 
-
-### Usage Examples
-
-
-```js
-// Project configuration.
-grunt.initConfig({
-  gitTag: {
-
-  }
-});
-```
-
-
 ## Release History
 
- * 2013-07-12   v0.1.0   Initial release
+ * 2013-07-12   0.0.1   Initial release
 
 
