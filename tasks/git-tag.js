@@ -91,7 +91,7 @@ module.exports = function (grunt) {
          */
         checkTag = function checkTag() {
             var tagExists, promptSchema;
-            tagExists = 'git ls-remote --tags |  grep "tags/' + newVersion + '" | grep -v grep | awk " {print $2}"';
+            tagExists = 'git ls-remote --tags |  grep "tags/' + newVersion + '" | awk " {print $2}"';
             exec(tagExists, function (err, stdout, stderr) {
                 if (err) {
                     grunt.fatal(stdout);

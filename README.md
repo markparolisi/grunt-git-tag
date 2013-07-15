@@ -37,7 +37,7 @@ gitTag: {
 
 ## Release History
 
- * 2013-07-13   0.0.5   Better organization. Event emitters.
+ * 2013-07-15   0.0.5   Better organization. Event emitters.
  * 2013-07-12   0.0.1   Initial release
 
 
